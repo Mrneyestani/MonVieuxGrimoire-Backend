@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const usersRouter = express.Router();
 usersRouter.post("/signup", signUp);
 usersRouter.post("/login", login);
-
+//###############################################################
 async function signUp(req, res) {
   const email = req.body.email;
   const password = req.body.password;
@@ -34,7 +34,7 @@ async function signUp(req, res) {
     res.status(500).send("Something went wrong");
   }
 }
-
+//###############################################################
 async function login(req, res) {
   const body = req.body;
   if (body.email == null || body.password == null) {
@@ -64,7 +64,7 @@ async function login(req, res) {
     res.status(500).send("Something went wrong");
   }
 }
-
+//###############################################################
 function generateToken(idInDb) {
   const payload = {
     userId: idInDb,
@@ -75,13 +75,13 @@ function generateToken(idInDb) {
   });
   return token;
 }
-
+//###############################################################
 function hashPassword(password) {
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
   return hash;
 }
-
+//###############################################################
 function isPasswordCorrect(password, hash) {
   return bcrypt.compareSync(password, hash);
 }

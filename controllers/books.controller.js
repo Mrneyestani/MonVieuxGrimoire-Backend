@@ -12,6 +12,7 @@ booksRouter.delete("/:id", checkToken, deleteBook);
 booksRouter.put("/:id", checkToken, upload.single("image"), putBook);
 booksRouter.post("/:id/rating", checkToken, postRating);
 
+//###############################################################
 async function postRating(req, res) {
   const id = req.params.id;
   if (id == null || id == "undefined") {
@@ -45,11 +46,12 @@ async function postRating(req, res) {
   }
 }
 
+//###############################################################
 function calculateAverageRating(ratings) {
   const sumOfAllGrades = ratings.reduce((sum, rating) => sum + rating.grade, 0);
   return sumOfAllGrades / ratings.length;
 }
-
+//###############################################################
 async function getBestRating(req, res) {
   try {
     const booksWithBestRatings = await Book.find()
@@ -64,7 +66,7 @@ async function getBestRating(req, res) {
     res.status(500).send("Something went wrong:" + e.message);
   }
 }
-
+//###############################################################
 async function putBook(req, res) {
   const id = req.params.id;
   const book = JSON.parse(req.body.book);
@@ -95,7 +97,7 @@ async function putBook(req, res) {
     res.status(500).send("Something went wrong:" + e.message);
   }
 }
-
+//###############################################################
 async function deleteBook(req, res) {
   const id = req.params.id;
   try {
@@ -117,7 +119,7 @@ async function deleteBook(req, res) {
     res.status(500).send("Something went wrong:" + e.message);
   }
 }
-
+//###############################################################
 function checkToken(req, res, next) {
   const headers = req.headers;
   const authorization = headers.authorization;
@@ -140,7 +142,7 @@ function checkToken(req, res, next) {
     res.status(401).send("Unauthorized");
   }
 }
-
+//###############################################################
 async function getBookById(req, res) {
   const id = req.params.id;
   try {
@@ -156,7 +158,7 @@ async function getBookById(req, res) {
     res.status(500).send("Something went wrong:" + e.message);
   }
 }
-
+//###############################################################
 async function postBook(req, res) {
   const stringifiedBook = req.body.book;
   const book = JSON.parse(stringifiedBook);
@@ -170,6 +172,7 @@ async function postBook(req, res) {
     res.status(500).send("Something went wrong:" + e.message);
   }
 }
+//###############################################################
 async function getBooks(req, res) {
   try {
     const books = await Book.find();
@@ -182,7 +185,7 @@ async function getBooks(req, res) {
     res.status(500).send("Something went wrong:" + e.message);
   }
 }
-
+//###############################################################
 function getAbsoluteImagePath(fileName) {
   return (
     process.env.PUBLIC_URL +
@@ -194,3 +197,4 @@ function getAbsoluteImagePath(fileName) {
 }
 
 module.exports = { booksRouter };
+//###############################################################

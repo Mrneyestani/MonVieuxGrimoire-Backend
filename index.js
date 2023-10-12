@@ -1,85 +1,18 @@
-const express = require("express");
-const app = express();
-const { User } = require("./db/mongo");
-const cors = require("cors");
-const bcrypt = require("bcrypt");
+require("dotenv").config();
+const { app } = require("./config/app");
+const { usersRouter } = require("./controllers/users.controller");
+const { booksRouter } = require("./controllers/books.controller");
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
-app.use(cors());
-app.use(express.json());
+app.get("/", (req, res) => res.send("Server running!"));
 
-function sayHi(req, res) {
-  res.send("Hello World");
-}
+app.use("/api/auth", usersRouter);
+app.use("/api/books", booksRouter);
 
-app.get("/", sayHi);
+app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
 
-app.post("/api/auth/signup", signUp);
-app.post("/api/auth/login", login);
-
-app.listen(PORT, function () {
-  console.log(`Server is runnig on: ${PORT}`);
-});
-
-async function signUp(req, res) {
-  const body = req.body;
-  const email = req.body.email;
-  const password = req.body.password;
-
-  const userInDb = await User.findOne({
-    email: email,
-  });
-
-  if (userInDb != null) {
-    res.status(400).send("Email already exists");
-    return;
-  }
-
-  function hashPassword(password) {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
-
-    return hash;
-  }
-
-  const user = {
-    email: email,
-    password: hashPassword(password),
-  };
-
-  try {
-    await User.create(user);
-  } catch (e) {
-    console.error(e);
-    res.status(500).send("Something went wrong");
-    return;
-  }
-  res.send("Sign up");
-}
-async function login(req, res) {
-  const body = req.body;
-
-  const userInDb = await User.findOne({
-    email: body.email,
-  });
-
-  if (userInDb == null) {
-    res.status(401).send("Wrong email");
-    return;
-  }
-
-  const passwordInDb = userInDb.password;
-  if (!isPasswordCorrect(req.body.password, passwordInDb)) {
-    res.status(401).send("Wrong password");
-    return;
-  }
-  res.send({
-    userId: userInDb._id,
-    token: "token",
-  });
-
-  function isPasswordCorrect(password, hash) {
-    return bcrypt.compareSync(password, hash);
-  }
-}
+//function pour supprimer tous les users
+// User.deleteMany({}).then(() => {
+//   console.log("Deleted all users");
+// });

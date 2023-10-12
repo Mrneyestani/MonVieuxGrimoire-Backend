@@ -1,7 +1,6 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
-const DB_URL = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.DB_Domain}`;
-console.log("DB_URL", DB_URL);
+
+const DB_URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_DOMAIN}`;
 
 async function connect() {
   try {
@@ -11,14 +10,4 @@ async function connect() {
     console.error(e);
   }
 }
-
 connect();
-
-const UserSchema = new mongoose.Schema({
-  email: String,
-  password: String,
-});
-
-const User = mongoose.model("User", UserSchema);
-
-module.exports = { User };

@@ -11,8 +11,3 @@ app.use("/api/auth", usersRouter);
 app.use("/api/books", booksRouter);
 
 app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
-
-//function pour supprimer tous les users
-// User.deleteMany({}).then(() => {
-//   console.log("Deleted all users");
-// });

@@ -87,7 +87,7 @@ function isPasswordCorrect(password, hash) {
 }
 
 //###############################################################
-//function pour supprimer tous les users
+// fonction pour supprimer tous les users
 // User.deleteMany({}).then(() => {
 //   console.log("Deleted all users");
 // });

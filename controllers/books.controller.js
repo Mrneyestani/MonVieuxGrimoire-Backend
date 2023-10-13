@@ -197,7 +197,7 @@ function getAbsoluteImagePath(fileName) {
 }
 
 //###############################################################
-//function pour supprimer tous les books
+// fonction pour supprimer tous les books
 // Book.deleteMany({}).then(() => {
 //   console.log("Deleted all Books");
 // });

@@ -86,4 +86,9 @@ function isPasswordCorrect(password, hash) {
   return bcrypt.compareSync(password, hash);
 }
 
+//###############################################################
+//function pour supprimer tous les users
+// User.deleteMany({}).then(() => {
+//   console.log("Deleted all users");
+// });
 module.exports = { usersRouter };

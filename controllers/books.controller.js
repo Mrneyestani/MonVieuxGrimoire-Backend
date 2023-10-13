@@ -196,5 +196,10 @@ function getAbsoluteImagePath(fileName) {
   );
 }
 
-module.exports = { booksRouter };
 //###############################################################
+//function pour supprimer tous les books
+// Book.deleteMany({}).then(() => {
+//   console.log("Deleted all Books");
+// });
+
+module.exports = { booksRouter };
